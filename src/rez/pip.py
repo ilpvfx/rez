@@ -426,7 +426,7 @@ def _get_distribution_files_mapping(distribution, targetdir):
 
         # Rarely, some distributions report an installed file as being in
         # ../../lib/python/<pkg-name>/...
-        #
+        #        
         if rel_src.startswith(lib_py_prefix):
             adjusted_rel_src = rel_src[len(lib_py_prefix):]
             rel_dest = os.path.join("python", adjusted_rel_src)
@@ -436,9 +436,16 @@ def _get_distribution_files_mapping(distribution, targetdir):
         # ../../include/python/<pkg-name>/...
         #
         if rel_src.startswith(include_py_prefix):
-            adjusted_rel_src = rel_src[len(include_py_prefix):]
-            rel_dest = os.path.join("python", adjusted_rel_src)
+            adjusted_rel_src = os.path.join("include", "python", rel_src[len(include_py_prefix):])
+            rel_dest = os.path.join("include", rel_src[len(include_py_prefix):])
             return (adjusted_rel_src, rel_dest)
+        
+        # If we still have a path like ../../...
+        # just put it in the root
+        #
+        if rel_src.startswith(os.path.join(os.pardir, os.pardir)):
+            adjusted_rel_src = os.path.basename(rel_src)
+            return (adjusted_rel_src, adjusted_rel_src)
 
         # A case we don't know how to deal with yet
         if topdir == os.pardir:
