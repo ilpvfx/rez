@@ -16,11 +16,7 @@ from hashlib import sha1
 
 
 def get_solver():
-    """Returns the available shell types: bash, tcsh etc.
-
-    Returns:
-        list[str]: Shells.
-    """
+    """Get the configured solver class."""
     from rez.plugin_managers import plugin_manager
     solver_name = config.solver
     solver = plugin_manager.get_plugin_class('solver', solver_name)
