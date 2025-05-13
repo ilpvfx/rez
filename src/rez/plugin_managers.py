@@ -451,6 +451,10 @@ class CommandPluginType(RezPluginType):
     """
     type_name = "command"
 
+class SolverPluginType(RezPluginType):
+    """Support for different solvers for resolving package dependencies.
+    """
+    type_name = "solver"
 
 plugin_manager = RezPluginManager()
 
@@ -462,3 +466,4 @@ plugin_manager.register_plugin_type(BuildSystemPluginType)
 plugin_manager.register_plugin_type(PackageRepositoryPluginType)
 plugin_manager.register_plugin_type(BuildProcessPluginType)
 plugin_manager.register_plugin_type(CommandPluginType)
+plugin_manager.register_plugin_type(SolverPluginType)

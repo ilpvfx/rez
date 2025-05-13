@@ -364,6 +364,7 @@ class BuildThreadCount_(Setting):
 config_schema = Schema({
     "packages_path":                                PathList,
     "plugin_path":                                  PathList,
+    "solver":                                       Str,
     "bind_module_path":                             PathList,
     "standard_system_paths":                        PathList,
     "package_definition_build_python_paths":        PathList,

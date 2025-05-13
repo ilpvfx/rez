@@ -69,6 +69,8 @@ local_packages_path = "~/packages"
 # production use, you will probably want to change this to a site-wide location.
 release_packages_path = "~/.rez/packages/int"
 
+solver = "standard"
+
 # Where temporary files go. Defaults to appropriate path depending on your
 # system. For example, \*nix distributions will probably set this to :file:`/tmp`. It
 # is highly recommended that this be set to local storage, such as :file:`/tmp`.

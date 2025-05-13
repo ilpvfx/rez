@@ -2,7 +2,7 @@
 # Copyright Contributors to the Rez Project
 
 
-from rez.solver import Solver, SolverStatus
+from rez.solver import SolverStatus
 from rez.package_repository import package_repository_manager
 from rez.packages import get_variant, get_last_release_time
 from rez.package_filter import PackageFilterList, TimestampRule
@@ -14,6 +14,17 @@ from contextlib import contextmanager
 from enum import Enum
 from hashlib import sha1
 
+
+def get_solver():
+    """Returns the available shell types: bash, tcsh etc.
+
+    Returns:
+        list[str]: Shells.
+    """
+    from rez.plugin_managers import plugin_manager
+    solver_name = config.solver
+    solver = plugin_manager.get_plugin_class('solver', solver_name)
+    return solver
 
 class ResolverStatus(Enum):
     """ Enum to represent the current state of a resolver instance.  The enum
@@ -395,6 +406,9 @@ class Resolver(object):
         return str(tuple(t))
 
     def _solve(self):
+        Solver = get_solver()
+        if not Solver:
+            raise RuntimeError("No solver available")
         solver = Solver(package_requests=self.package_requests,
                         package_paths=self.package_paths,
                         context=self.context,
